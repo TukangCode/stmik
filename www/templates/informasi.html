@@ -1,0 +1,33 @@
+<ion-view view-title="Informasi">
+	<ion-content>
+		<ion-refresher
+			pulling-text="Pull to refresh..."
+			on-refresh="getInfo()">
+		</ion-refresher>
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search" ng-model="search">
+			</label>
+		</div>
+		<ion-list>
+			<ion-item ng-repeat="info in informasi|filter : search">
+				<div class="list card">
+					<div class="item item-avatar">
+						<img src="img/no-user-profile.jpg">
+						<h2>{{info.dosen}}</h2>
+					</div>
+					<div class="item item-body">
+						<p>{{info.perihal}}</p>
+					</div>
+					<div class="item item-body">
+						<p>
+							{{info.keterangan}}
+						</p>
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
+

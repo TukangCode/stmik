@@ -1,0 +1,35 @@
+<ion-view view-title="Jadwal">
+	<ion-content>
+		<ion-refresher
+			pulling-text="Pull to refresh..."
+			on-refresh="getJadwal()">
+		</ion-refresher>
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search" ng-model="search">
+			</label>
+		</div>
+		<ion-list>
+			<ion-item ng-repeat="buku in model|filter : search">
+				<div class="list card">
+					<div class="item item-avatar">
+						<img src="img/no-user-profile.jpg">
+						<h2>{{buku.dosen}}</h2>
+						<p>{{buku.matakuliah}}</p>
+					</div>
+					<div class="item item-body">
+						<p>
+							Hari : {{buku.hari}}</br>
+							Masuk : {{buku.jam_masuk}}</br>
+							Keluar : {{buku.jam_keluar}}</br>
+							Ruangan : {{buku.ruang}}</br>
+						</p>
+					</div>
+
+				</div>      
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
+

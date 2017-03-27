@@ -1,0 +1,33 @@
+<ion-view view-title="Tugas">
+	<ion-content>
+		<ion-refresher
+			pulling-text="Pull to refresh..."
+			on-refresh="getTugas()">
+		</ion-refresher>
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search" ng-model="search">
+			</label>
+		</div>
+		<ion-list>
+			<ion-item ng-repeat="tugas in tugas|filter : search">
+				<div class="list card">
+					<div class="item item-avatar">
+						<img src="img/no-user-profile.jpg">
+						<h2>{{tugas.dosen}}</h2>
+						<p>{{tugas.matakuliah}}</p>
+					</div>
+					<div class="item item-body">
+						<p>
+							{{tugas.keterangan}}
+						</p>
+						<p>
+							<a href="#" class="subdued">Deadline : {{tugas.deadline}}</a>
+						</p>
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>

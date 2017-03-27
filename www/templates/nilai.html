@@ -1,0 +1,37 @@
+<ion-view view-title="Nilai">
+	<ion-content>
+		<ion-refresher
+			pulling-text="Pull to refresh..."
+			on-refresh="getNilai()">
+		</ion-refresher>
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search" ng-model="search">
+			</label>
+		</div>
+		<ion-list>
+			<ion-item ng-repeat="data in nilai|filter : search">
+				<div class="list card">
+					<div class="item item-avatar">
+						<img src="img/no-user-profile.jpg">
+						<h2>{{data.dosen}}</h2>
+						<p>{{data.matakuliah}}</p>
+					</div>
+					<div class="item item-body">
+						<p>
+						Status : {{data.status_lulus}}  Grade : {{data.nilai_huruf}}
+						</p>
+						<p>
+							<a href="#" class="subdued">Tugas    : {{data.nilai_tugas}}</a></br>
+							<a href="#" class="subdued">Praktikum: {{data.nilai_praktikum}}</a></br>
+							<a href="#" class="subdued">UTS      : {{data.nilai_uts}}</a></br>
+							<a href="#" class="subdued">UAS      : {{data.nilai_uas}}</a></br>
+							<a href="#" class="subdued">Total    : {{data.nilai_akhir}}</a>
+						</p>
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
