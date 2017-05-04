@@ -45,7 +45,7 @@ angular.module('starter.controllers', [])
 		});
 	};
 })
-.controller('JadwalCtrl', function($scope,$rootScope,$state,$http,$stateParams, $ionicLoading, Service) {
+.controller('JadwalCtrl', function($scope,$rootScope,$state,$http,$stateParams, $ionicLoading,$ionicPopup, Service) {
 	if($rootScope.token == null){
 		$state.go("login");
 	}
@@ -59,7 +59,10 @@ angular.module('starter.controllers', [])
 			$scope.model.push(value);
 			})
 		}).error(function(data){
-			$state.go("login");
+			var alertPopup = $ionicPopup.alert({
+                title: 'Login failed!',
+                template: 'gagal tersambung ke server check koneksi internet anda'
+			});
 		}).finally(function() {
 			//stop loading...
 			Service.loadingHide();
@@ -70,7 +73,7 @@ angular.module('starter.controllers', [])
 	$scope.getJadwal();
 })
 
-.controller('NilaiCtrl', function($scope,$rootScope,$state,$http,$stateParams, $ionicLoading, Service) {
+.controller('NilaiCtrl', function($scope,$rootScope,$state,$http,$stateParams, $ionicLoading,$ionicPopup, Service) {
 	if($rootScope.token == null){
 		$state.go("login");
 	}
@@ -84,7 +87,10 @@ angular.module('starter.controllers', [])
 				$scope.nilai.push(value);
 			})
 		}).error(function(){
-			$state.go("login");
+			var alertPopup = $ionicPopup.alert({
+                title: 'Login failed!',
+                template: 'gagal tersambung ke server check koneksi internet anda'
+			});
 		}).finally(function() {
 			//stop loading...
 			Service.loadingHide();
@@ -94,7 +100,7 @@ angular.module('starter.controllers', [])
 	};
 	$scope.getNilai();
 })
-.controller('InfoCtrl', function($scope,$rootScope,$state, $http,$stateParams, $ionicLoading, Service) {
+.controller('InfoCtrl', function($scope,$rootScope,$state, $http,$stateParams, $ionicLoading,$ionicPopup, Service) {
 	if($rootScope.token == null){
 		$state.go("login");
 	}
@@ -108,7 +114,10 @@ angular.module('starter.controllers', [])
 				$scope.informasi.push(value);
 			})
 		}).error(function(){
-			$state.go("login");
+			var alertPopup = $ionicPopup.alert({
+                title: 'Login failed!',
+                template: 'gagal tersambung ke server check koneksi internet anda'
+			});
 		}).finally(function() {
 			//stop loading...
 			Service.loadingHide();
@@ -118,7 +127,7 @@ angular.module('starter.controllers', [])
 	};
 	$scope.getInfo();
 })
-.controller('MateriCtrl', function($scope,$rootScope, $state, $http,$stateParams, $ionicLoading, Service) {
+.controller('MateriCtrl', function($cordovaFileTransfer,$scope,$rootScope,$state,$http,$stateParams,$ionicLoading,$ionicPopup,Service) {
 	if($rootScope.token == null){
 		$state.go("login");
 	}
@@ -136,7 +145,6 @@ angular.module('starter.controllers', [])
                 title: 'Login failed!',
                 template: 'gagal tersambung ke server check koneksi internet anda'
 			});
-			$state.go("login");
 		}).finally(function() {
 			//stop loading...
 			Service.loadingHide();
@@ -145,17 +153,47 @@ angular.module('starter.controllers', [])
      });
 	};
 	$scope.getMateri();
+
+	$scope.Download = function (filename) {
+		Service.loadingShow();
+		ionic.Platform.ready(function(){
+             var url = "http://matkul.esy.es/public/api/download/";
+             var targetPath = cordova.file.externalRootDirectory + filename;
+  
+              $cordovaFileTransfer.download(url+filename, targetPath, {}, true).then(function (result) {
+				//stop loading...
+				Service.loadingHide();
+				// Stop the ion-refresher from spinning
+				$scope.$broadcast('scroll.refreshComplete');			  
+                    $scope.hasil = 'Save file on '+targetPath+' success!';
+                    var alertPopup = $ionicPopup.alert({
+						title: 'Success',
+						template: 'berhasil download, Save file on '+targetPath
+					})
+              }, function (error) {
+				//stop loading...
+				Service.loadingHide();
+				// Stop the ion-refresher from spinning
+				$scope.$broadcast('scroll.refreshComplete');
+                    var alertPopup = $ionicPopup.alert({
+						title: 'Alert!',
+						template: 'gagal download'
+					});
+					alert(error);
+              }, function (progress) {
+                    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+              });
+      });
+  }
 })
-.controller('TugasCtrl', function($scope, $http, $rootScope, $state, $stateParams, $ionicLoading, Service, $ionicPopup) {
+.controller('TugasCtrl', function($scope, $http, $rootScope, $state, $stateParams, $ionicLoading,$ionicPopup, Service) {
 	if($rootScope.token == null){
 		$state.go("login");
 	}
-	$scope.token = $rootScope.token;
-	$scope.nim = $rootScope.nim;
 	$scope.getTugas = function(){
 		Service.loadingShow();
 		$http.get(
-			Service.baseUrl()+'tugas/'+$scope.nim+'/'+$scope.token
+			Service.baseUrl()+'tugas/'+$rootScope.nim+'/'+$rootScope.token
 		).success(function(data){
 			$scope.tugas = [];
 				angular.forEach(data.data, function(value, key) {
@@ -167,8 +205,6 @@ angular.module('starter.controllers', [])
                 title: 'Error!',
                 template: 'gagal tersambung ke server check koneksi internet anda'
 			});
-			$state.go("login");
-			
 		}).finally(function() {
 			//stop loading...
 			Service.loadingHide();
@@ -177,4 +213,4 @@ angular.module('starter.controllers', [])
      });
 	};
 	$scope.getTugas();
-});
+})

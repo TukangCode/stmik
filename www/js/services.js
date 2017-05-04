@@ -3,7 +3,7 @@ angular.module('starter.services', [])
 .service('Service', function($ionicLoading) {
         var token = '';
 		var nim = '';
-		var baseUrl = 'http://localhost/siakad/public/api/';
+		var baseUrl = 'http://matkul.esy.es/public/api/';
 
         return {
             baseUrl: function () {
