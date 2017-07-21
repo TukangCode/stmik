@@ -127,6 +127,34 @@ angular.module('starter.controllers', [])
 	};
 	$scope.getInfo();
 })
+.controller('TugasCtrl', function($scope, $http, $rootScope, $state, $stateParams, $ionicLoading,$ionicPopup, Service) {
+	if($rootScope.token == null){
+		$state.go("login");
+	}
+	$scope.getTugas = function(){
+		Service.loadingShow();
+		$http.get(
+			Service.baseUrl()+'tugas/'+$rootScope.nim+'/'+$rootScope.token
+		).success(function(data){
+			$scope.tugass = [];
+				angular.forEach(data.data, function(value, key) {
+			$scope.tugass.push(value);
+			});
+			Service.loadingHide();
+		}).error(function(data){
+			var alertPopup = $ionicPopup.alert({
+                title: 'Error!',
+                template: 'gagal tersambung ke server check koneksi internet anda'
+			});
+		}).finally(function() {
+			//stop loading...
+			Service.loadingHide();
+			// Stop the ion-refresher from spinning
+			$scope.$broadcast('scroll.refreshComplete');
+     });
+	};
+	$scope.getTugas();
+})
 .controller('MateriCtrl', function($cordovaFileTransfer,$scope,$rootScope,$state,$http,$stateParams,$ionicLoading,$ionicPopup,Service) {
 	if($rootScope.token == null){
 		$state.go("login");
@@ -186,31 +214,4 @@ angular.module('starter.controllers', [])
       });
   }
 })
-.controller('TugasCtrl', function($scope, $http, $rootScope, $state, $stateParams, $ionicLoading,$ionicPopup, Service) {
-	if($rootScope.token == null){
-		$state.go("login");
-	}
-	$scope.getTugas = function(){
-		Service.loadingShow();
-		$http.get(
-			Service.baseUrl()+'tugas/'+$rootScope.nim+'/'+$rootScope.token
-		).success(function(data){
-			$scope.tugas = [];
-				angular.forEach(data.data, function(value, key) {
-			$scope.tugas.push(value);
-			});
-			Service.loadingHide();
-		}).error(function(data){
-			var alertPopup = $ionicPopup.alert({
-                title: 'Error!',
-                template: 'gagal tersambung ke server check koneksi internet anda'
-			});
-		}).finally(function() {
-			//stop loading...
-			Service.loadingHide();
-			// Stop the ion-refresher from spinning
-			$scope.$broadcast('scroll.refreshComplete');
-     });
-	};
-	$scope.getTugas();
-})
+
