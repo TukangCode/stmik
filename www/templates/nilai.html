@@ -10,9 +10,11 @@
 				<input type="text" placeholder="Search" ng-model="search">
 			</label>
 		</div>
-		<ion-list>
 			<ion-item ng-repeat="data in nilai|filter : search">
-				<div class="list card">
+			<div class="list list-inset">
+				{{data.matakuliah}}
+				<span class="item-note" style="font-weight: bold; font-size: 25px; color: purple;">{{data.nilai_huruf}}</span>
+				<!--<div class="list card">
 					<div class="item item-avatar item-royal">
 						<img src="img/no-user-profile.jpg">
 						<h2>{{data.dosen}}</h2>
@@ -30,8 +32,7 @@
 							<a href="#" class="subdued">Total    : {{data.nilai_akhir}}</a>
 						</p>
 					</div>
-				</div>
+				</div>-->
 			</ion-item>
-		</ion-list>
 	</ion-content>
 </ion-view>

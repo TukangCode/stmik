@@ -11,9 +11,9 @@
 			</label>
 		</div>
 		<ion-list>
-			<ion-item ng-repeat="jadwal in model|filter : search">
-				<div class="list card">
-					<div class="item item-avatar item-balanced">
+			<ion-item>
+			<div class="list card" ng-repeat="jadwal in model|filter : search">
+					<!--<div class="item item-avatar item-balanced">
 						<img src="img/no-user-profile.jpg">
 						<h2>{{jadwal.dosen}}</h2>
 						<p>{{jadwal.matakuliah}}</p>
@@ -24,10 +24,17 @@
 							Masuk : {{jadwal.jam_masuk}}</br>
 							Keluar : {{jadwal.jam_keluar}}</br>
 							Ruangan : {{jadwal.ruang}}</br>
+						</p>-->
+						<div class="item item-body">
+						<p>{{jadwal.matakuliah}}</p>
+						<p>
+						<a href="#" class="subdued">{{jadwal.hari}}</a>
+						<a href="#" class="subdued">Jam : {{jadwal.jam_masuk}}</a>
+						<a href="#" class="subdued">{{jadwal.ruang}}</a>
 						</p>
 					</div>
 
-				</div>      
+				</div>
 			</ion-item>
 		</ion-list>
 	</ion-content>
