@@ -13,9 +13,7 @@
 		<ion-list>
 			<ion-item ng-repeat="tugas in tugass|filter : search">
 				<div class="list card">
-					<div class="item item-avatar item-positive">
-						<img src="img/no-user-profile.jpg">
-						<h2>{{tugas.dosen}}</h2>
+					<div class="item item-positive">
 						<p>{{tugas.matakuliah}}</p>
 					</div>
 					<div class="item item-body">
@@ -25,6 +23,7 @@
 						</p>
 						<p>
 							<a href="#" class="subdued">Deadline : {{tugas.deadline}}</a>
+							<button class="button button-positive" ng-click="Download(materi.filename)">Download</button>
 						</p>
 					</div>
 				</div>

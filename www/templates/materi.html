@@ -13,21 +13,19 @@
 		<ion-list>
 			<ion-item ng-repeat="materi in materis|filter : search" >
 				<div class="list card">
-					<div class="item item-avatar item-energized">
-						<img src="img/no-user-profile.jpg">
-						<h2>{{materi.dosen}}</h2>
-						<p>{{materi.matakuliah}}</p>
-					</div>
-
+				<div class="item item-energized">
+				{{materi.matakuliah}}
+				</div>
 					<div class="item item-body">
 						<p>
-							{{materi.nama_materi}}
+							Materi : {{materi.nama_materi}}
 						</p>
 						<p>
 						<button class="button button-calm" ng-click="Download(materi.filename)">Download</button>
 						</p>
 					</div>
 				</div>
+				
 			</ion-item>
 		</ion-list>
 	</ion-content>

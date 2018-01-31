@@ -13,9 +13,8 @@
 		<ion-list>
 			<ion-item ng-repeat="info in informasi|filter : search">
 				<div class="list card">
-					<div class="item item-avatar item-calm">
-						<img src="img/no-user-profile.jpg">
-						<h2>{{info.dosen}}</h2>
+					<div class="item item-calm">
+						{{info.dosen}}
 					</div>
 					<div class="item item-body">
 						<p>{{info.perihal}}</p>
